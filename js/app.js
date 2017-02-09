@@ -9,6 +9,8 @@
          zoom: 14, 
          disableDefaultUI: true
        });
+     }
+     /*
        // Create a single latLng literal object.
        var singleLatLng = {lat: 40.74135, lng: -73.99802};
        // TODO: Create a single marker appearing on initialize -
@@ -45,6 +47,7 @@
             populateInfoWindow(this, largeInfowindow);
           });
      }
+     */
 
      var menu = $('.options-box'); 
      var menuStatus = "open"; 
