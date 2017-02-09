@@ -1,5 +1,5 @@
      
-
+var map;
 var model = [
   {
     name: "Echo Mountain", 
@@ -77,53 +77,83 @@ var Place = function(data) {
 
 
 
-var ViewModel = function() {
-  var self = this; 
-  this.placeList = ko.observableArray([]); 
-  model.forEach(function(placeItem){
-    self.placeList.push(new Place(placeItem)); 
-  });
-}
-
-ko.applyBindings(new ViewModel()); 
-
-
-
-
-
-
-
-var map;
-
-// Function to initialize the map within the map div
-var mapView = {
-
- initMap: function() {
+var viewModel = {
+  // Initialization Code. 
+  
+  // Map Initialization
+  initMap: function() {
    map = new google.maps.Map(document.getElementById('map'), {
      center: {lat: 40.74135, lng: -73.99802},
      zoom: 14, 
      disableDefaultUI: true
    });
- }
-}
+ },
 
-var menuView = function () {
+ menuInit: function () {
  var menu = $('.options-box'); 
  var menuStatus = "open"; 
  $('#burger').click(function () {
   if (menuStatus === "open") {
     menu.removeClass("open").addClass("closed");
-    menuStatus = "closed"; 
-    console.log("phish"); 
+    menuStatus = "closed";  
   } else {
     menu.removeClass("closed").addClass("open");
     menuStatus = "open"; 
-    console.log("rules"); 
   }
 });
-}
+},
 
-menuView(); 
+  init: function() {
+    viewModel.menuInit(); 
+  },
+
+
+  places: ko.observableArray([]), 
+  query: ko.observable(''),
+  search: function(value) {
+    viewModel.places.removeAll();
+    if (value == '') {
+      model.forEach(function(placeItem){
+        viewModel.places.push(placeItem);
+
+      });
+
+    }
+    else {
+      model.forEach(function(placeItem){
+        if (placeItem.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+          viewModel.places.push(placeItem);
+        }
+
+      });
+    }
+  } 
+
+
+}
+/*
+var ViewModel = function() {
+  var self = this; 
+  this.placeList = ko.observableArray([]); 
+  model.forEach(function(placeItem){
+    self.placeList.push(new Place(placeItem));
+
+   
+  });
+}
+*/
+
+viewModel.query.subscribe(viewModel.search);
+ko.applyBindings(viewModel); 
+
+
+
+
+
+
+
+
+viewModel.init(); 
 
 
      /*
