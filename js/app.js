@@ -3,13 +3,16 @@
 
      var map;
      // Function to initialize the map within the map div
-     function initMap() {
+     var mapView = {
+
+     initMap: function() {
        map = new google.maps.Map(document.getElementById('map'), {
          center: {lat: 40.74135, lng: -73.99802},
          zoom: 14, 
          disableDefaultUI: true
        });
      }
+   }
      /*
        // Create a single latLng literal object.
        var singleLatLng = {lat: 40.74135, lng: -73.99802};
