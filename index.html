@@ -12,40 +12,16 @@
     <input id="show-listings" type="button" value="Show Listings">
     <input id="hide-listings" type="button" value="Hide Listings">
   </div>
-  <ul>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-    <li>Phish Rules</li>
-    <li>No Seriously, They Do</li>
-  </ul>
+<ul data-bind="foreach: placeList">
+        <li data-bind="text: name"></li>
+    </ul>
 </div>
 
 <div id="map"></div>
 <img id="burger" class="open" src="img/menu.png">
 <!--TODO: Insert your API Key in the below call to load the API.-->
 <script src="js/lib/jQuery.js"></script>
+<script src="js/lib/knockout-3.2.0.js"></script>
 <script src="js/app.js"></script>
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyABacmrJFf7rQqMBuQb5juvZefnNsvZQT4&callback=mapView.initMap">
