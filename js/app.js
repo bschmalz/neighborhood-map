@@ -1,5 +1,7 @@
      
 var map;
+var markers = []; 
+
 var model = [
   {
     name: "Echo Mountain", 
@@ -69,26 +71,20 @@ var model = [
 ]; 
 
 
-var Place = function(data) {
-  this.name = ko.observable(data.name); 
-  this.Address = ko.observable(data.Address); 
-  this.latlng = data.latlng; 
-}
-
-
-
 var viewModel = {
-  // Initialization Code. 
   
   // Map Initialization
   initMap: function() {
    map = new google.maps.Map(document.getElementById('map'), {
-     center: {lat: 40.74135, lng: -73.99802},
-     zoom: 14, 
+     center: {lat: 34.216806, lng: -117.857176},
+     zoom: 11, 
      disableDefaultUI: true
    });
+   viewModel.markerInit();  
  },
 
+
+ // Menu Initialization, this is to setup the swiping functionality for mobile responsiveness. 
  menuInit: function () {
  var menu = $('.options-box'); 
  var menuStatus = "open"; 
@@ -103,14 +99,46 @@ var viewModel = {
 });
 },
 
+  // General Init Function to call the more specific ones. 
   init: function() {
     viewModel.menuInit();
     viewModel.search("");  
   },
 
+  markerInit: function() {
+    var largeInfowindow = new google.maps.InfoWindow();
+    model.forEach(function(placeItem){
+      var position = placeItem.latlng; 
+      var title = placeItem.name;
+        placeItem.marker = new google.maps.Marker({
+        position: position, 
+        title: title, 
+        animation: google.maps.Animation.DROP
+        });
+        var bounds = new google.maps.LatLngBounds();
+        markers.push(placeItem.marker);
+        // Create an onclick event to open an infowindow at each marker.
+        placeItem.marker.addListener('click', function() {
+            viewModel.populateInfoWindow(this, largeInfowindow);
+        });
+      });
+    var bounds = new google.maps.LatLngBounds();
 
+    for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+          bounds.extend(markers[i].position);
+        }
+        map.fitBounds(bounds);
+
+  },
+
+
+  
+  // Set up observables for search functionality. 
   places: ko.observableArray([]), 
   query: ko.observable(''),
+
+  // Search controls what is seen based on text input. 
   search: function(value) {
     viewModel.places.removeAll();
     if (value == '') {
@@ -128,7 +156,21 @@ var viewModel = {
 
       });
     }
-  } 
+  }, 
+
+  populateInfoWindow: function(marker, infowindow) {
+        // Check to make sure the infowindow is not already opened on this marker.
+        if (infowindow.marker != marker) {
+          infowindow.marker = marker;
+          infowindow.setContent('<div>' + marker.title + '</div>');
+          infowindow.open(map, marker);
+          // Make sure the marker property is cleared if the infowindow is closed.
+          infowindow.addListener('closeclick', function() {
+            infowindow.marker = null;
+          });
+        }
+      }
+
 
 
 }
