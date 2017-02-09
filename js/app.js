@@ -104,7 +104,8 @@ var viewModel = {
 },
 
   init: function() {
-    viewModel.menuInit(); 
+    viewModel.menuInit();
+    viewModel.search("");  
   },
 
 
