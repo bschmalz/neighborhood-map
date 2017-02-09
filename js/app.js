@@ -81,6 +81,7 @@ var viewModel = {
      disableDefaultUI: true
    });
    viewModel.markerInit();  
+   viewModel.search("");
  },
 
 
@@ -102,7 +103,6 @@ var viewModel = {
   // General Init Function to call the more specific ones. 
   init: function() {
     viewModel.menuInit();
-    viewModel.search("");  
   },
 
   markerInit: function() {
@@ -115,7 +115,7 @@ var viewModel = {
         title: title, 
         animation: google.maps.Animation.DROP
         });
-        var bounds = new google.maps.LatLngBounds();
+
         markers.push(placeItem.marker);
         // Create an onclick event to open an infowindow at each marker.
         placeItem.marker.addListener('click', function() {
@@ -123,12 +123,6 @@ var viewModel = {
         });
       });
     var bounds = new google.maps.LatLngBounds();
-
-    for (var i = 0; i < markers.length; i++) {
-          markers[i].setMap(map);
-          bounds.extend(markers[i].position);
-        }
-        map.fitBounds(bounds);
 
   },
 
@@ -141,21 +135,36 @@ var viewModel = {
   // Search controls what is seen based on text input. 
   search: function(value) {
     viewModel.places.removeAll();
+    var bounds = new google.maps.LatLngBounds();
+
     if (value == '') {
       model.forEach(function(placeItem){
         viewModel.places.push(placeItem);
+        placeItem.marker.setMap(map); 
+        bounds.extend(placeItem.marker.position); 
 
       });
 
     }
     else {
       model.forEach(function(placeItem){
+        placeItem.marker.setMap(null); 
         if (placeItem.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
           viewModel.places.push(placeItem);
+          placeItem.marker.setMap(map); 
+          bounds.extend(placeItem.marker.position); 
         }
 
       });
     }
+        if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
+       var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.01, bounds.getNorthEast().lng() + 0.01);
+       var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.01, bounds.getNorthEast().lng() - 0.01);
+       bounds.extend(extendPoint1);
+       bounds.extend(extendPoint2);
+    }
+
+    map.fitBounds(bounds);
   }, 
 
   populateInfoWindow: function(marker, infowindow) {
