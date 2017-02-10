@@ -11,31 +11,6 @@ var viewModel = {
    viewModel.search("");
  },
 
-/*
- // Menu Initialization, this is to setup the swiping functionality for mobile responsiveness. 
- menuInit: function () {
- var menu = $('.options-box'); 
- var menuStatus = "open"; 
- $('#burger').click(function () {
-  if (menuStatus === "open") {
-    menu.removeClass("open").addClass("closed");
-    menuStatus = "closed";  
-  } else {
-    menu.removeClass("closed").addClass("open");
-    menuStatus = "open"; 
-  }
-});
-},
-*/
-
-  // General Init Function to call the more specific ones. 
-  init: function() {
-    //viewModel.menuInit();
-  },
-
-
-
-
   markerInit: function() {
     var largeInfowindow = new google.maps.InfoWindow({content: infoWindowTemplate}); 
     var isInfoWindowLoaded = false;
@@ -126,9 +101,6 @@ var viewModel = {
   }
   }, 
 
-
-
-
   placeData: ko.observableArray(''), 
 
  
@@ -152,12 +124,9 @@ var viewModel = {
 
   }
 
-
-
 }
 
 
 viewModel.query.subscribe(viewModel.search);
 ko.applyBindings(viewModel); 
-viewModel.init(); 
 
