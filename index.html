@@ -2,10 +2,9 @@
 <head>
  <!-- styles put here, but you can include a CSS file and reference it instead! -->
  <link rel="stylesheet" href="css/main.css">
-
 </head>
 <body>
- <div class="options-box">
+ <div class="options-box" data-bind="style: {transform: viewModel.menu() ? 'translate(5px, 5px)' : 'translate(-300px, 5px)'}">
   <h1>Neighborhood Map</h1>
   <div>
 <form>
@@ -17,7 +16,7 @@
 </ul>
 </div>
 <div id="map"></div>
-<img id="burger" class="open" src="img/menu.png">
+<img id="burger" class="open" src="img/menu.png" data-bind="click: viewModel.toggleMenu">
 <!--TODO: Insert your API Key in the below call to load the API.-->
 <script src="js/lib/jQuery.js"></script>
 <script src="js/lib/oauth-signature.js"></script>

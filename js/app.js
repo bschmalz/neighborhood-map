@@ -1,4 +1,3 @@
-     
 var viewModel = {
   
   // Map Initialization
@@ -12,7 +11,7 @@ var viewModel = {
    viewModel.search("");
  },
 
-
+/*
  // Menu Initialization, this is to setup the swiping functionality for mobile responsiveness. 
  menuInit: function () {
  var menu = $('.options-box'); 
@@ -27,10 +26,11 @@ var viewModel = {
   }
 });
 },
+*/
 
   // General Init Function to call the more specific ones. 
   init: function() {
-    viewModel.menuInit();
+    //viewModel.menuInit();
   },
 
   markerInit: function() {
@@ -59,6 +59,17 @@ var viewModel = {
   // Set up observables for search functionality. 
   places: ko.observableArray([]), 
   query: ko.observable(''),
+  menu: ko.observable(true), 
+
+  toggleMenu: function() {
+    console.log('toggle'); 
+    if (viewModel.menu()) {
+      viewModel.menu(false);
+    }
+    else {
+      viewModel.menu(true); 
+    }
+  },
 
   // Search controls what is seen based on text input. 
   search: function(value) {

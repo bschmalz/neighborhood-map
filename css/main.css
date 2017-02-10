@@ -26,15 +26,6 @@
     overflow: auto; 
     padding-top: 50px;
     transform: translate(5px, 5px);
-  }
-
-  .open {
-  transform: translate(5px, 5px);
-  transition: transform 0.3s ease;
-  }
-
-  .closed {
-    transform: translate(-300px, 5px);
     transition: transform 0.3s ease;
   }
 
