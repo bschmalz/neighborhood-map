@@ -2,6 +2,22 @@
 var map;
 var markers = []; 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var model = [
   {
     name: "Echo Mountain", 
@@ -172,6 +188,34 @@ var viewModel = {
   }
   }, 
 
+  yelp: {
+      nonce: function() {
+        return (Math.floor(Math.random() * 1e12).toString());
+      }, 
+      request: function(term, location, marker, infowindow) {
+        
+        var yelp_url = "https://api.yelp.com/v2/search?";
+
+        var YELP_KEY = "xvXh4B427NsVnC2-F4kESQ";
+        YELP_TOKEN = "iqY4Sz_8lWn3rRiD7Z_CrLkLB6jMemtA";
+        YELP_KEY_SECRET ="qjqTxLIF2WifccrRtw62AI-dZsI";
+        YELP_TOKEN_SECRET = " tCgodZ0C8Ll-P4eCiYydFTiXx5E";
+
+      var parameters = {
+      term: term,
+      location: location,
+      oauth_consumer_key: YELP_KEY,
+      oauth_token: YELP_TOKEN,
+      oauth_nonce: viewModel.yelp.nonce(),
+      oauth_timestamp: Math.floor(Date.now()/1000),
+      oauth_signature_method: 'HMAC-SHA1',
+      oauth_version : '1.0',
+      callback: 'cb'              // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
+    };
+
+}
+  },
+
   populateInfoWindow: function(marker, infowindow) {
         // Check to make sure the infowindow is not already opened on this marker.
         if (infowindow.marker != marker) {
@@ -194,7 +238,7 @@ var nytUrl = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + cit
     */
 
 
-          infowindow.setContent('<div>' + marker.title + '</div>');
+          infowindow.setContent('<div class="infoWindow">' + marker.title + '</div>');
           infowindow.open(map, marker);
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick', function() {
@@ -221,10 +265,46 @@ var ViewModel = function() {
 viewModel.query.subscribe(viewModel.search);
 ko.applyBindings(viewModel); 
 
+var nonce = function() {
+        return (Math.floor(Math.random() * 1e12).toString());
+      }; 
 
+nonceNumber = nonce(); 
+var coolSpot = "34.204037, -118.130727";
 
+var yelpAPIUrl = "https://api.yelp.com/v2/search";
+var consumerKey = "xvXh4B427NsVnC2-F4kESQ";
+var token = "iqY4Sz_8lWn3rRiD7Z_CrLkLB6jMemtA";
+var consumerSecret = "qjqTxLIF2WifccrRtw62AI-dZsI";
+var tokenSecret = "tCgodZ0C8Ll-P4eCiYydFTiXx5E";
 
+var parameters = {
+  oauth_consumer_key: consumerKey,
+  oauth_token: token,
+  oauth_signature_method: 'HMAC-SHA1',
+  oauth_timestamp: Math.floor(Date.now()/1000),
+  //this is typical for oauth found this explanation: see this for explanation https://www.thepolyglotdeveloper.com/2015/03/create-a-random-nonce-string-using-javascript/
+  oauth_nonce: nonceNumber,
+  oauth_version : '1.0',
+  callback: 'cb',
+  term: "food",
+  location: coolSpot           
+};
 
+var encodedSignature = oauthSignature.generate('GET', yelpAPIUrl, parameters, consumerSecret, tokenSecret);
+  parameters.oauth_signature = encodedSignature;
+
+var settings = {
+  url: yelpAPIUrl,
+    data: parameters,
+    cache: true,
+    dataType: "jsonp",
+    success: function(results){
+      console.log(results);
+    }
+};
+
+$.ajax(settings);
 
 
 
