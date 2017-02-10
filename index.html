@@ -17,6 +17,10 @@
 </div>
 <div id="map"></div>
 <img id="burger" class="open" src="img/menu.png" data-bind="click: viewModel.toggleMenu">
+<script type="text/html" id="info-window-template">
+    <h3 data-bind="text: $data"></h3>
+    <p>Content Provided by Yelp</p>
+</script>
 <!--TODO: Insert your API Key in the below call to load the API.-->
 <script src="js/lib/jQuery.js"></script>
 <script src="js/lib/oauth-signature.js"></script>

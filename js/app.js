@@ -33,14 +33,28 @@ var viewModel = {
     //viewModel.menuInit();
   },
 
+
+
+
   markerInit: function() {
-    var largeInfowindow = new google.maps.InfoWindow();
+    var largeInfowindow = new google.maps.InfoWindow({content: infoWindowTemplate}); 
+    var isInfoWindowLoaded = false;
+    google.maps.event.addListener(largeInfowindow, 'domready', function () {
+                if (!isInfoWindowLoaded) {
+                    ko.applyBindings(self, $("#info-window")[0]);
+                    isInfoWindowLoaded = true;
+                }
+            });
+
+
     model.forEach(function(placeItem){
-      var position = placeItem.latlng; 
+      var position = {lat: placeItem.latlng[0],lng: placeItem.latlng[1]}; 
+      var yelpPosition = placeItem.latlng; 
       var title = placeItem.name;
         placeItem.marker = new google.maps.Marker({
         position: position, 
         title: title, 
+        yelpData: yelpPosition,
         animation: google.maps.Animation.DROP
         });
 
@@ -59,7 +73,7 @@ var viewModel = {
   // Set up observables for search functionality. 
   places: ko.observableArray([]), 
   query: ko.observable(''),
-  menu: ko.observable(true), 
+  menu: ko.observable(true),
 
   toggleMenu: function() {
     console.log('toggle'); 
@@ -111,21 +125,34 @@ var viewModel = {
   }
   }, 
 
+  //Observables for infoWindow. 
+  markerName: ko.observable(''),
+  markerURL: ko.observable(''),
+  markerSnippet: ko.observable(''),
+
+
   populateInfoWindow: function(marker, infowindow) {
-        // Check to make sure the infowindow is not already opened on this marker.
+      viewModel.markerName(''); 
+      viewModel.markerURL(''); 
+      viewModel.markerName(''); 
+
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
-
-
-
-          infowindow.setContent('<div class="infoWindow">' + marker.title + '</div>');
           infowindow.open(map, marker);
+          yelpApiRequest(marker.yelpData, marker.title); 
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick', function() {
             infowindow.marker = null;
           });
         }
-      }
+      }, 
+  apiRecieve: function(name, url, snippet) {
+    viewModel.markerName(name); 
+    viewModel.markerURL(url); 
+    viewModel.markerSnippet(snippet); 
+    console.log("phish"); 
+    console.log(viewModel.markerName()); 
+  }
 
 
 

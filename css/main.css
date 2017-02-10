@@ -9,6 +9,10 @@
     height: 100%; 
   }
 
+  #info-window {
+    text-align: center; 
+  }
+
 
   .options-box {
     background: rgba(0, 0, 0, 0.85);
