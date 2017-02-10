@@ -136,8 +136,10 @@ var viewModel = {
   search: function(value) {
     viewModel.places.removeAll();
     var bounds = new google.maps.LatLngBounds();
+    var markerPlaced = false; 
 
     if (value == '') {
+      markerPlaced = true;  
       model.forEach(function(placeItem){
         viewModel.places.push(placeItem);
         placeItem.marker.setMap(map); 
@@ -152,25 +154,46 @@ var viewModel = {
         if (placeItem.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
           viewModel.places.push(placeItem);
           placeItem.marker.setMap(map); 
-          bounds.extend(placeItem.marker.position); 
+          bounds.extend(placeItem.marker.position);
+          markerPlaced = true;  
         }
 
       });
     }
-        if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
+      if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
        var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.01, bounds.getNorthEast().lng() + 0.01);
        var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.01, bounds.getNorthEast().lng() - 0.01);
        bounds.extend(extendPoint1);
        bounds.extend(extendPoint2);
     }
 
+    if (markerPlaced) {
     map.fitBounds(bounds);
+  }
   }, 
 
   populateInfoWindow: function(marker, infowindow) {
         // Check to make sure the infowindow is not already opened on this marker.
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
+/*
+var nytUrl = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + cityStr + '&sort=newest&api-key=4419e7dabaf1427b8d0760db2b917bf6'; 
+    $.getJSON(nytUrl, function(data) {
+        $nytHeaderElem.text('New York Times Articles About ' + cityStr); 
+        var articles = data.response.docs;
+        for (var i = 0; i < articles.length; i++) {
+            var article = articles[i]; 
+    $("#nytimes-articles").append('<li> <a href="'+article.web_url+'">'+article.headline.main+'</a> <p>'+article.snippet+'</p> </li>');       } 
+
+    })
+    .fail(function(e) {
+        $nytHeaderElem.text('New York Times Articles Could Not Be Loaded'); 
+
+    }); 
+
+    */
+
+
           infowindow.setContent('<div>' + marker.title + '</div>');
           infowindow.open(map, marker);
           // Make sure the marker property is cleared if the infowindow is closed.
