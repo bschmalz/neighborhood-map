@@ -1,6 +1,6 @@
 var map;
 var markers = []; 
-var infoWindowTemplate = '<div id="info-window"' + 'data-bind="template: { name: \'info-window-template\', data: viewModel.markerName}">' + '</div>';
+var infoWindowTemplate = '<div id="info-window"' + 'data-bind="template: { name: \'info-window-template\', data: viewModel.placeData}">' + '</div>';
 
 //var infoWindowTemplate = '<div class=\'infoWindow\'><h3 data-bind=\"text: viewModel.places[1]\"></h3><img src="" data-bind="attr: {src: viewModel.markerURL}"><p data-bind=\"text: viewModel.markerSnippet\"></p><p>All content provided by Yelp.</p></div>'; 
 

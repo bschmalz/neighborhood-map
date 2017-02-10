@@ -62,6 +62,7 @@ var viewModel = {
         // Create an onclick event to open an infowindow at each marker.
         placeItem.marker.addListener('click', function() {
             viewModel.populateInfoWindow(this, largeInfowindow);
+            map.setCenter(position);
         });
       });
     var bounds = new google.maps.LatLngBounds();
@@ -132,6 +133,7 @@ var viewModel = {
 
  
   populateInfoWindow: function(marker, infowindow) {
+    viewModel.placeData.removeAll();
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
           infowindow.open(map, marker);
