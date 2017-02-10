@@ -125,17 +125,13 @@ var viewModel = {
   }
   }, 
 
-  //Observables for infoWindow. 
-  markerName: ko.observable(''),
-  markerURL: ko.observable(''),
-  markerSnippet: ko.observable(''),
 
 
+
+  placeData: ko.observableArray(''), 
+
+ 
   populateInfoWindow: function(marker, infowindow) {
-      viewModel.markerName(''); 
-      viewModel.markerURL(''); 
-      viewModel.markerName(''); 
-
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
           infowindow.open(map, marker);
@@ -147,11 +143,11 @@ var viewModel = {
         }
       }, 
   apiRecieve: function(name, url, snippet) {
-    viewModel.markerName(name); 
-    viewModel.markerURL(url); 
-    viewModel.markerSnippet(snippet); 
-    console.log("phish"); 
-    console.log(viewModel.markerName()); 
+    viewModel.placeData.push(name); 
+    viewModel.placeData.push(url); 
+    viewModel.placeData.push(snippet); 
+    console.log(viewModel.placeData()[0]); 
+
   }
 
 
