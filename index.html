@@ -12,7 +12,7 @@
 </form>
   </div>
 <ul data-bind="foreach: places">
-        <li data-bind="text: name, click: $parent.setCat"></li>
+        <li data-bind="text: name, click: viewModel.menuClick"></li>
 </ul>
 </div>
 <div id="map"></div>

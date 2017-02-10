@@ -1,3 +1,5 @@
+var largeInfowindow; 
+
 var viewModel = {
   
   // Map Initialization
@@ -12,7 +14,7 @@ var viewModel = {
  },
 
   markerInit: function() {
-    var largeInfowindow = new google.maps.InfoWindow({content: infoWindowTemplate}); 
+    largeInfowindow = new google.maps.InfoWindow({content: infoWindowTemplate}); 
     var isInfoWindowLoaded = false;
     google.maps.event.addListener(largeInfowindow, 'domready', function () {
                 if (!isInfoWindowLoaded) {
@@ -44,6 +46,15 @@ var viewModel = {
 
   },
 
+  
+  menuItem: ko.observable(), 
+  
+  menuClick: function() {
+            viewModel.populateInfoWindow(this.marker, largeInfowindow);
+            map.setCenter(this.marker.position);
+            
+        }, 
+
 
   
   // Set up observables for search functionality. 
@@ -63,7 +74,11 @@ var viewModel = {
 
   // Search controls what is seen based on text input. 
   search: function(value) {
+    largeInfowindow.marker = null; 
+    largeInfowindow.close(); 
+    viewModel.placeData.removeAll();
     viewModel.places.removeAll();
+
     var bounds = new google.maps.LatLngBounds();
     var markerPlaced = false; 
 
