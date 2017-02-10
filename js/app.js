@@ -100,54 +100,11 @@ var viewModel = {
   }
   }, 
 
-  yelp: {
-      nonce: function() {
-        return (Math.floor(Math.random() * 1e12).toString());
-      }, 
-      request: function(term, location, marker, infowindow) {
-        
-        var yelp_url = "https://api.yelp.com/v2/search?";
-
-        var YELP_KEY = "xvXh4B427NsVnC2-F4kESQ";
-        YELP_TOKEN = "iqY4Sz_8lWn3rRiD7Z_CrLkLB6jMemtA";
-        YELP_KEY_SECRET ="qjqTxLIF2WifccrRtw62AI-dZsI";
-        YELP_TOKEN_SECRET = " tCgodZ0C8Ll-P4eCiYydFTiXx5E";
-
-      var parameters = {
-      term: term,
-      location: location,
-      oauth_consumer_key: YELP_KEY,
-      oauth_token: YELP_TOKEN,
-      oauth_nonce: viewModel.yelp.nonce(),
-      oauth_timestamp: Math.floor(Date.now()/1000),
-      oauth_signature_method: 'HMAC-SHA1',
-      oauth_version : '1.0',
-      callback: 'cb'              // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
-    };
-
-}
-  },
-
   populateInfoWindow: function(marker, infowindow) {
         // Check to make sure the infowindow is not already opened on this marker.
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
-/*
-var nytUrl = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + cityStr + '&sort=newest&api-key=4419e7dabaf1427b8d0760db2b917bf6'; 
-    $.getJSON(nytUrl, function(data) {
-        $nytHeaderElem.text('New York Times Articles About ' + cityStr); 
-        var articles = data.response.docs;
-        for (var i = 0; i < articles.length; i++) {
-            var article = articles[i]; 
-    $("#nytimes-articles").append('<li> <a href="'+article.web_url+'">'+article.headline.main+'</a> <p>'+article.snippet+'</p> </li>');       } 
 
-    })
-    .fail(function(e) {
-        $nytHeaderElem.text('New York Times Articles Could Not Be Loaded'); 
-
-    }); 
-
-    */
 
 
           infowindow.setContent('<div class="infoWindow">' + marker.title + '</div>');
@@ -162,118 +119,9 @@ var nytUrl = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + cit
 
 
 }
-/*
-var ViewModel = function() {
-  var self = this; 
-  this.placeList = ko.observableArray([]); 
-  model.forEach(function(placeItem){
-    self.placeList.push(new Place(placeItem));
 
-   
-  });
-}
-*/
 
 viewModel.query.subscribe(viewModel.search);
 ko.applyBindings(viewModel); 
-
-var nonce = function() {
-        return (Math.floor(Math.random() * 1e12).toString());
-      }; 
-
-nonceNumber = nonce(); 
-var coolSpot = "34.204037, -118.130727";
-
-var yelpAPIUrl = "https://api.yelp.com/v2/search";
-var consumerKey = "xvXh4B427NsVnC2-F4kESQ";
-var token = "iqY4Sz_8lWn3rRiD7Z_CrLkLB6jMemtA";
-var consumerSecret = "qjqTxLIF2WifccrRtw62AI-dZsI";
-var tokenSecret = "tCgodZ0C8Ll-P4eCiYydFTiXx5E";
-
-var parameters = {
-  oauth_consumer_key: consumerKey,
-  oauth_token: token,
-  oauth_signature_method: 'HMAC-SHA1',
-  oauth_timestamp: Math.floor(Date.now()/1000),
-  //this is typical for oauth found this explanation: see this for explanation https://www.thepolyglotdeveloper.com/2015/03/create-a-random-nonce-string-using-javascript/
-  oauth_nonce: nonceNumber,
-  oauth_version : '1.0',
-  callback: 'cb',
-  term: "food",
-  location: coolSpot           
-};
-
-var encodedSignature = oauthSignature.generate('GET', yelpAPIUrl, parameters, consumerSecret, tokenSecret);
-  parameters.oauth_signature = encodedSignature;
-
-var settings = {
-  url: yelpAPIUrl,
-    data: parameters,
-    cache: true,
-    dataType: "jsonp",
-    success: function(results){
-      console.log(results);
-    }
-};
-
-$.ajax(settings);
-
-
-
 viewModel.init(); 
 
-
-     /*
-       // Create a single latLng literal object.
-       var singleLatLng = {lat: 40.74135, lng: -73.99802};
-       // TODO: Create a single marker appearing on initialize -
-       // Create it with the position of the singleLatLng,
-       // on the map, and give it your own title!
-       var marker = new google.maps.Marker({
-            map: map,
-            position: singleLatLng,
-            title: "Phish Rules",
-            animation: google.maps.Animation.DROP,
-            id: 1
-          });
-
-       // TODO: create a single infowindow, with your own content.
-       // It must appear on the marker
-       var largeInfowindow = new google.maps.InfoWindow();
-
-       function populateInfoWindow(marker, infowindow) {
-        // Check to make sure the infowindow is not already opened on this marker.
-        if (infowindow.marker != marker) {
-          infowindow.marker = marker;
-          infowindow.setContent('<div>' + singleLatLng.lat + " " + singleLatLng.lng + '</div>');
-          infowindow.open(map, marker);
-          // Make sure the marker property is cleared if the infowindow is closed.
-          infowindow.addListener('closeclick',function(){
-            infowindow.setMarker = null;
-          });
-        }
-      }
-
-       // TODO: create an EVENT LISTENER so that the infowindow opens when
-       // the marker is clicked!
-       marker.addListener('click', function() {
-            populateInfoWindow(this, largeInfowindow);
-          });
-     }
-    
-
-     var menu = $('.options-box'); 
-     var menuStatus = "open"; 
-     $('#burger').click(function () {
-        if (menuStatus === "open") {
-            menu.removeClass("open").addClass("closed");
-            menuStatus = "closed"; 
-            console.log("phish"); 
-        } else {
-            menu.removeClass("closed").addClass("open");
-            menuStatus = "open"; 
-            console.log("rules"); 
-        }
-    });
-        */
-     
