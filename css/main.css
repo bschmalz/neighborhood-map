@@ -4,17 +4,16 @@
     padding: 0;
 
   }
-  
+
   #map { 
     height: 100%; 
   }
 
-  
 
   .options-box {
     background: rgba(0, 0, 0, 0.85);
     border: 1px solid #999;
-    border-radius: 15px;
+    border-radius: 10px;
     height: 95%;
     line-height: 35px;
     text-align: left;
