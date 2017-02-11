@@ -23,7 +23,7 @@ var viewModel = {
         var isInfoWindowLoaded = false;
         google.maps.event.addListener(largeInfowindow, 'domready', function() {
             if (!isInfoWindowLoaded) {
-                ko.applyBindings(self, $("#info-window")[0]);
+                ko.applyBindings(largeInfowindow, $("#info-window")[0]);
                 isInfoWindowLoaded = true;
             }
         });
@@ -46,7 +46,7 @@ var viewModel = {
             markers.push(placeItem.marker);
             // Create an onclick event to open an infowindow at each marker.
             placeItem.marker.addListener('click', function() {
-                viewModel.populateInfoWindow(this, largeInfowindow);
+                viewModel.populateInfoWindow(this);
                 map.setCenter(position);
             });
         });
@@ -125,15 +125,15 @@ var viewModel = {
     placeData: ko.observableArray(''),
 
 
-    populateInfoWindow: function(marker, infowindow) {
+    populateInfoWindow: function(marker) {
         viewModel.placeData.removeAll();
-        if (infowindow.marker != marker) {
-            infowindow.marker = marker;
-            infowindow.open(map, marker);
+        if (largeInfowindow.marker != marker) {
+            largeInfowindow.marker = marker;
+            largeInfowindow.open(map, marker);
             yelpApiRequest(marker.yelpData, marker.title);
             // Make sure the marker property is cleared if the infowindow is closed.
-            infowindow.addListener('closeclick', function() {
-                infowindow.marker = null;
+            largeInfowindow.marker.addListener('closeclick', function() {
+                largeInfowindow.marker.marker = null;
             });
         }
     },
