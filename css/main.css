@@ -57,6 +57,10 @@
     color: white;
   }
 
+  .phish:hover {
+    color: red;
+  }
+
  img.open {
     z-index: 5; 
     top: 10px; 
