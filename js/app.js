@@ -81,9 +81,7 @@ var viewModel = {
 
     // Search controls what is seen based on text input. 
     search: function(value) {
-        largeInfowindow.marker = null;
-        largeInfowindow.close();
-        viewModel.placeData.removeAll();
+
         viewModel.places.removeAll();
 
         var bounds = new google.maps.LatLngBounds();
@@ -126,11 +124,11 @@ var viewModel = {
 
 
     populateInfoWindow: function(marker) {
-        viewModel.placeData.removeAll();
+    
         if (largeInfowindow.marker != marker) {
+            yelpApiRequest(marker.yelpData, marker.title);
             largeInfowindow.marker = marker;
             largeInfowindow.open(map, marker);
-            yelpApiRequest(marker.yelpData, marker.title);
             // Make sure the marker property is cleared if the infowindow is closed.
             largeInfowindow.marker.addListener('closeclick', function() {
                 largeInfowindow.marker.marker = null;

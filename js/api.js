@@ -1,4 +1,5 @@
 var yelpApiRequest = function(location, title) {
+  viewModel.placeData.removeAll();
   console.log(location); 
   console.log(title); 
 
