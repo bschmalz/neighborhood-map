@@ -126,9 +126,10 @@ var viewModel = {
     populateInfoWindow: function(marker) {
     
         if (largeInfowindow.marker != marker) {
-            yelpApiRequest(marker.yelpData, marker.title);
             largeInfowindow.marker = marker;
             largeInfowindow.open(map, marker);
+            viewModel.placeData.removeAll();
+            yelpApiRequest(marker.yelpData, marker.title);
             // Make sure the marker property is cleared if the infowindow is closed.
             largeInfowindow.marker.addListener('closeclick', function() {
                 largeInfowindow.marker.marker = null;

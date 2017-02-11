@@ -12,6 +12,8 @@
   #info-window {
     text-align: center; 
     max-width: 280px; 
+    min-width: 280px;
+    min-height: 260px;
   }
 
 
