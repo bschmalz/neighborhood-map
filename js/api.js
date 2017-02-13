@@ -1,3 +1,7 @@
+function googleError() {
+  alert("There seems to be an issue with loading Google Maps. Try refreshing your window."); 
+}; 
+
 var yelpApiRequest = function(location, title) {
   viewModel.placeData.removeAll();
   console.log(location); 
@@ -49,3 +53,4 @@ var yelpApiRequest = function(location, title) {
   $.ajax(settings);
 
 }; 
+
