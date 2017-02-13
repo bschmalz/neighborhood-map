@@ -12,7 +12,7 @@
 </form>
   </div>
 <ul data-bind="foreach: places">
-        <li class = "phish", data-bind="text: name, click: viewModel.menuClick"></li>
+        <li class = "phish", data-bind="text: name, click: viewModel.menuClick, event: {mouseover: viewModel.menuMouseOver, mouseout:viewModel.menuMouseOut }"></li>
 </ul>
 </div>
 <div id="map"></div>

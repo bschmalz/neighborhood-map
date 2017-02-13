@@ -63,7 +63,7 @@ var viewModel = {
                 title: title,
                 icon: defaultIcon,
                 yelpData: yelpPosition,
-                animation: google.maps.Animation.DROP
+                animation: null
             });
 
             markers.push(placeItem.marker);
@@ -83,6 +83,7 @@ var viewModel = {
         });
         var bounds = new google.maps.LatLngBounds();
 
+
     },
 
 
@@ -91,6 +92,18 @@ var viewModel = {
     menuClick: function() {
         viewModel.populateInfoWindow(this.marker, largeInfowindow);
         map.setCenter(this.marker.position);
+
+    },
+
+    menuMouseOver: function() {
+        console.log("mouseover"); 
+        this.marker.setAnimation(google.maps.Animation.BOUNCE); 
+
+    },
+
+     menuMouseOut: function() {
+        console.log("mouseout"); 
+        this.marker.setAnimation(null); 
 
     },
 
