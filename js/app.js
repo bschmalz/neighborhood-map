@@ -1,5 +1,19 @@
 var largeInfowindow;
 
+
+var makeMarkerIcon = function(markerColor) {
+    var markerImage = new google.maps.MarkerImage(
+        'http:/chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor + '|40|_|&E2%80%A2', 
+        new google.maps.Size(21,34), 
+        new google.maps.Point(0,0), 
+        new google.maps.Point(10,10),
+        new google.maps.Size(21, 34)); 
+
+        return markerImage; 
+        
+}
+
+
 var viewModel = {
 
     // Map Initialization
@@ -17,6 +31,8 @@ var viewModel = {
     },
 
     markerInit: function() {
+        
+        // Set up Infowindow to be hooked up with markers created below. 
         largeInfowindow = new google.maps.InfoWindow({
             content: infoWindowTemplate
         });
@@ -28,7 +44,13 @@ var viewModel = {
             }
         });
 
+        //Establishing default and highlighted icons for markers. These are created in the makeMarkerIcon function above. 
+        var defaultIcon = makeMarkerIcon('0091ff'); 
+        var highlightedIcon = makeMarkerIcon('FFFF24'); 
 
+
+
+        // Iterate through our model and create markers for each one. 
         model.forEach(function(placeItem) {
             var position = {
                 lat: placeItem.latlng[0],
@@ -39,6 +61,7 @@ var viewModel = {
             placeItem.marker = new google.maps.Marker({
                 position: position,
                 title: title,
+                icon: defaultIcon,
                 yelpData: yelpPosition,
                 animation: google.maps.Animation.DROP
             });
@@ -48,6 +71,14 @@ var viewModel = {
             placeItem.marker.addListener('click', function() {
                 viewModel.populateInfoWindow(this);
                 map.setCenter(position);
+            });
+
+            // Add mouse over and mouse out events to change marker color on selection. 
+            placeItem.marker.addListener('mouseover', function() {
+                this.setIcon(highlightedIcon); 
+            });
+            placeItem.marker.addListener('mouseout', function() {
+                this.setIcon(defaultIcon); 
             });
         });
         var bounds = new google.maps.LatLngBounds();
