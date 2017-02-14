@@ -151,8 +151,8 @@ var viewModel = {
             });
         }
 
-        var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.05, bounds.getNorthEast().lng() + 0.05);
-        var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.05, bounds.getNorthEast().lng() - 0.05);
+        var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.06, bounds.getNorthEast().lng() + 0.06);
+        var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.06, bounds.getNorthEast().lng() - 0.06);
         bounds.extend(extendPoint1);
         bounds.extend(extendPoint2);
 
@@ -164,8 +164,8 @@ var viewModel = {
 
     placeData: ko.observableArray(''),
 
-
     populateInfoWindow: function(marker) {
+
     
         if (largeInfowindow.marker != marker) {
             largeInfowindow.marker = marker;
@@ -173,8 +173,8 @@ var viewModel = {
             viewModel.placeData.removeAll();
             yelpApiRequest(marker.yelpData, marker.title);
             // Make sure the marker property is cleared if the infowindow is closed.
-            largeInfowindow.marker.addListener('closeclick', function() {
-                largeInfowindow.marker.marker = null;
+            largeInfowindow.addListener('closeclick', function() {
+                largeInfowindow.marker= null;
             });
         }
     },
