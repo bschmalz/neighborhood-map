@@ -23,7 +23,8 @@ var viewModel = {
                 lat: 34.216806,
                 lng: -117.857176
             },
-            zoom: 11,
+            zoom: 10,
+            maxZoom: 10, 
             disableDefaultUI: true
         });
         viewModel.markerInit();
@@ -128,10 +129,12 @@ var viewModel = {
 
         var bounds = new google.maps.LatLngBounds();
         var markerPlaced = false;
+        var fullMap = false; 
 
         if (value == '') {
-            markerPlaced = true;
-            model.forEach(function(placeItem) {
+                markerPlaced = true; 
+                fullMap = true; 
+                model.forEach(function(placeItem) {
                 viewModel.places.push(placeItem);
                 placeItem.marker.setMap(map);
                 bounds.extend(placeItem.marker.position);
@@ -139,6 +142,7 @@ var viewModel = {
             });
 
         } else {
+            map.maxZoom = null;
             model.forEach(function(placeItem) {
                 placeItem.marker.setMap(null);
                 if (placeItem.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
@@ -151,12 +155,16 @@ var viewModel = {
             });
         }
 
-        var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.06, bounds.getNorthEast().lng() + 0.06);
-        var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.06, bounds.getNorthEast().lng() - 0.06);
+        var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.03, bounds.getNorthEast().lng() + 0.03);
+        var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.03, bounds.getNorthEast().lng() - 0.03);
         bounds.extend(extendPoint1);
         bounds.extend(extendPoint2);
 
         if (markerPlaced) {
+            if (fullMap) {
+                map.maxZoom = 10;
+                console.log("yo"); 
+            };
             map.fitBounds(bounds);
         }
 
