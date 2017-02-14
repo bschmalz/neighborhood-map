@@ -40,11 +40,22 @@ var viewModel = {
             content: infoWindowTemplate
         });
 
-        // Set up bindings on InfoWindow once it is created.
-        google.maps.event.addListener(largeInfowindow, 'domready', function() {
-            ko.applyBindings(largeInfowindow, $("#info-window")[0]);
+        // Variable to make sure we only bind infoWindow once. 
+        var windowBinded = false;
 
+        // Set up bindings on InfoWindow once it is created.
+
+        google.maps.event.addListener(largeInfowindow, 'domready', function() {
+
+            // Check if bindings are already set up. 
+            if (!windowBinded) {
+
+                // Apply bindings and set windowBinded to true so that the app does not try to set bindings again.     
+                ko.applyBindings(largeInfowindow, $("#info-window")[0]);
+                windowBinded = true;
+            }
         });
+
 
         //Establishing default and highlighted icons for markers. These are created in the makeMarkerIcon function above. 
         var defaultIcon = makeMarkerIcon('ff3838');
@@ -72,6 +83,7 @@ var viewModel = {
             placeItem.marker.addListener('click', function() {
                 viewModel.populateInfoWindow(this);
                 map.setCenter(position);
+                map.setZoom(14); 
             });
 
             // Add mouse over and mouse out events to change marker color on selection. 
@@ -90,6 +102,10 @@ var viewModel = {
     menuClick: function() {
         viewModel.populateInfoWindow(this.marker, largeInfowindow);
         map.setCenter(this.marker.position);
+        map.setZoom(14); 
+
+        // Closes the menu. This greatly improves the mobile experience. 
+        viewModel.toggleMenu(); 
 
     },
 
@@ -113,11 +129,11 @@ var viewModel = {
 
     // Simple method used to toggle the menu observable called by knockout events placed in the burger icon on the index file. 
     toggleMenu: function() {
-        console.log('toggle');
         if (viewModel.menu()) {
             viewModel.menu(false);
         } else {
             viewModel.menu(true);
+            map.setZoom(10); 
         }
     },
 

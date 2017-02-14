@@ -12,13 +12,14 @@
   #search {
     width: 80%;
     font: 25px Arial, sans-serif;
+    background-color: #F8F8FF; 
   }
 
 
   #info-window {
     text-align: center; 
-    max-width: 400px; 
-    min-width: 400px;
+    max-width: 300px; 
+    min-width: 300px;
     min-height: 300px;
   }
 
@@ -29,7 +30,7 @@
     border-radius: 10px;
     line-height: 35px;
     text-align: left;
-    width: 310px;
+    width: 280px;
     position: absolute; 
     z-index: 2; 
     font-family: Helvetica;
@@ -48,36 +49,37 @@
     color: #eeffea;
   }
 
-  #hide-listings,
-  #show-listings {
-    width: 48%;
-  }
-
   #windowHeader {
-    font-size: 24px; 
+    font-size: 18px; 
   }
 
   #windowImg {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
+    display: none;
+    margin: auto;
   }
 
+  #windowImg[src] {
+   display: block;
+ }
+
   .windowText {
-    font-size: 18px; 
+    font-size: 15px; 
   }
 
 
   ul {
     list-style: none; 
-        padding: 0;
+    padding: 0;
     margin: 0;
   }
 
   li {
     color: white;
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 100;
-    padding: 5px;  
+    padding: 3px;  
   }
 
   li:hover {

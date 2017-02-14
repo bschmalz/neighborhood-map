@@ -1,6 +1,7 @@
 <html>
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/main.css">
     <title>San Gabriel Hikes</title>
@@ -35,7 +36,7 @@
     <!--Template used in order to populate infoWindows with knockout data once they are loaded.-->
     <script type="text/html" id="info-window-template">
         <h3 id="windowHeader" , data-bind="text: $data[0]"></h3>
-        <img id="windowImg" , src="" data-bind="attr: {src: $data[1]}">
+        <img id="windowImg" , data-bind="attr: {src: $data[1]}">
         <p class="windowText" , data-bind="text: $data[2]"></p>
         <p class="windowText">Content Provided by Yelp</p>
     </script>
