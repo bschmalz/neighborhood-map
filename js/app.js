@@ -83,7 +83,7 @@ var viewModel = {
             placeItem.marker.addListener('click', function() {
                 viewModel.populateInfoWindow(this);
                 map.setCenter(position);
-                map.setZoom(14); 
+                map.setZoom(13); 
             });
 
             // Add mouse over and mouse out events to change marker color on selection. 
@@ -102,7 +102,7 @@ var viewModel = {
     menuClick: function() {
         viewModel.populateInfoWindow(this.marker, largeInfowindow);
         map.setCenter(this.marker.position);
-        map.setZoom(14); 
+        map.setZoom(13); 
 
         // Closes the menu. This greatly improves the mobile experience. 
         viewModel.toggleMenu(); 

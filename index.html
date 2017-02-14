@@ -31,7 +31,7 @@
     <div id="map"></div>
 
     <!--Knockout click event toggles knockout observable used to track menu open/closed status.-->
-    <img id="burger" class="open" src="img/menu.png" data-bind="click: viewModel.toggleMenu">
+    <img id="burger" class="open" src="img/menu.png" data-bind="style: {transform: viewModel.menu() ? 'translate(5px, 5px)' : 'translate(-260px, 5px)'}, click: viewModel.toggleMenu">
 
     <!--Template used in order to populate infoWindows with knockout data once they are loaded.-->
     <script type="text/html" id="info-window-template">
