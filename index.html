@@ -4,11 +4,11 @@
  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
- <div class="options-box" data-bind="style: {transform: viewModel.menu() ? 'translate(5px, 5px)' : 'translate(-300px, 5px)'}">
+ <div class="options-box" data-bind="style: {transform: viewModel.menu() ? 'translate(5px, 5px)' : 'translate(-320px, 5px)'}">
   <h1>San Gabriel Hikes</h1>
   <div>
 <form>
-  <input id="search" type="search" name="search" placeholder="Search for a user" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" height="48" />
+  <input id="search" type="search" name="search" placeholder="Find a Hike" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off"/>
 </form>
   </div>
 <ul data-bind="foreach: places">
@@ -18,10 +18,10 @@
 <div id="map"></div>
 <img id="burger" class="open" src="img/menu.png" data-bind="click: viewModel.toggleMenu">
 <script type="text/html" id="info-window-template">
-    <h3 data-bind="text: $data[0]"></h3>
-    <img src="" data-bind="attr: {src: $data[1]}">
-    <p data-bind="text: $data[2]"></p>
-    <p>Content Provided by Yelp</p>
+    <h3 id = "windowHeader", data-bind="text: $data[0]"></h3>
+    <img id = "windowImg", src="" data-bind="attr: {src: $data[1]}">
+    <p class = "windowText", data-bind="text: $data[2]"></p>
+    <p class = "windowText">Content Provided by Yelp</p>
 </script>
 <!--TODO: Insert your API Key in the below call to load the API.-->
 <script src="js/lib/jQuery.js"></script>
