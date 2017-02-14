@@ -1,37 +1,59 @@
 <html>
+
 <head>
- <!-- styles put here, but you can include a CSS file and reference it instead! -->
- <link rel="stylesheet" href="css/main.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <title>San Gabriel Hikes</title>
 </head>
+
 <body>
- <div class="options-box" data-bind="style: {transform: viewModel.menu() ? 'translate(5px, 5px)' : 'translate(-320px, 5px)'}">
-  <h1>San Gabriel Hikes</h1>
-  <div>
-<form>
-  <input id="search" type="search" name="search" placeholder="Find a Hike" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off"/>
-</form>
-  </div>
-<ul data-bind="foreach: places">
-        <li data-bind="text: name, click: viewModel.menuClick, event: {mouseover: viewModel.menuMouseOver, mouseout:viewModel.menuMouseOut }"></li>
-</ul>
-</div>
-<div id="map"></div>
-<img id="burger" class="open" src="img/menu.png" data-bind="click: viewModel.toggleMenu">
-<script type="text/html" id="info-window-template">
-    <h3 id = "windowHeader", data-bind="text: $data[0]"></h3>
-    <img id = "windowImg", src="" data-bind="attr: {src: $data[1]}">
-    <p class = "windowText", data-bind="text: $data[2]"></p>
-    <p class = "windowText">Content Provided by Yelp</p>
-</script>
-<!--TODO: Insert your API Key in the below call to load the API.-->
-<script src="js/lib/jQuery.js"></script>
-<script src="js/lib/oauth-signature.js"></script>
-<script src="js/lib/knockout-3.2.0.js"></script>
-<script src="js/model.js"></script>
-<script src="js/app.js"></script>
-<script src="js/api.js"></script>
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABacmrJFf7rQqMBuQb5juvZefnNsvZQT4&v=3&callback=viewModel.initMap" onerror="googleError()">
-</script>
+
+    <!--Knockout using translate to move the options menu off screen based on knockout variable.-->
+    <div class="options-box" data-bind="style: {transform: viewModel.menu() ? 'translate(5px, 5px)' : 'translate(-320px, 5px)'}">
+        <h1>San Gabriel Hikes</h1>
+        <div>
+            <form>
+
+                <!--Knockout used here to send search data used to filter list and marker items.-->
+                <input id="search" type="search" name="search" placeholder="Find a Hike" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
+            </form>
+        </div>
+
+        <!--Knockout used to poplate the list with all of the items in the observable places array. -->
+        <ul data-bind="foreach: places">
+
+            <!--Knockout used here to add click, mouseover, and mouse off events for interactivity.-->
+            <li data-bind="text: name, click: viewModel.menuClick, event: {mouseover: viewModel.menuMouseOver, mouseout:viewModel.menuMouseOut }"></li>
+        </ul>
+
+    </div>
+    <div id="map"></div>
+
+    <!--Knockout click event toggles knockout observable used to track menu open/closed status.-->
+    <img id="burger" class="open" src="img/menu.png" data-bind="click: viewModel.toggleMenu">
+
+    <!--Template used in order to populate infoWindows with knockout data once they are loaded.-->
+    <script type="text/html" id="info-window-template">
+        <h3 id="windowHeader" , data-bind="text: $data[0]"></h3>
+        <img id="windowImg" , src="" data-bind="attr: {src: $data[1]}">
+        <p class="windowText" , data-bind="text: $data[2]"></p>
+        <p class="windowText">Content Provided by Yelp</p>
+    </script>
+
+    <!--Javascript Libraries.-->
+    <script src="js/lib/jQuery.js"></script>
+    <script src="js/lib/oauth-signature.js"></script>
+    <script src="js/lib/knockout-3.2.0.js"></script>
+
+    <!--App specific Javascript.-->
+    <script src="js/model.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/api.js"></script>
+
+    <!--Loads the google map AIP via async to improve responsiveness.-->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABacmrJFf7rQqMBuQb5juvZefnNsvZQT4&v=3&callback=viewModel.initMap" onerror="googleError()">
+    </script>
 </body>
+
 </html>

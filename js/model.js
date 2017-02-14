@@ -1,8 +1,10 @@
 // Global variables. 
 var map;
-var markers = []; 
-var infoWindowTemplate = '<div id="info-window"' + 'data-bind="template: { name: \'info-window-template\', data: viewModel.placeData}">' + '</div>';
 var largeInfowindow;
+
+// This is a template that we use to populate infoWindows. The matching part of the template is on the HTML file so that it loads properly for knockout. 
+var infoWindowTemplate = '<div id="info-window"' + 'data-bind="template: { name: \'info-window-template\', data: viewModel.placeData}">' + '</div>';
+
 
 // Model info representing the locations and coordinates of our places of interest. 
 var model = [
