@@ -45,8 +45,8 @@ var viewModel = {
         });
 
         //Establishing default and highlighted icons for markers. These are created in the makeMarkerIcon function above. 
-        var defaultIcon = makeMarkerIcon('0091ff'); 
-        var highlightedIcon = makeMarkerIcon('FFFF24'); 
+        var defaultIcon = makeMarkerIcon('ff3838'); 
+        var highlightedIcon = makeMarkerIcon('87ff38'); 
 
 
 
@@ -96,13 +96,11 @@ var viewModel = {
     },
 
     menuMouseOver: function() {
-        console.log("mouseover"); 
         this.marker.setAnimation(google.maps.Animation.BOUNCE); 
 
     },
 
      menuMouseOut: function() {
-        console.log("mouseout"); 
         this.marker.setAnimation(null); 
 
     },

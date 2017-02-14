@@ -8,11 +8,11 @@
   <h1>Neighborhood Map</h1>
   <div>
 <form>
-  <input id="search" type="search" name="search" placeholder="Search for a user" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
+  <input id="search" type="search" name="search" placeholder="Search for a user" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" height="48" />
 </form>
   </div>
 <ul data-bind="foreach: places">
-        <li class = "phish", data-bind="text: name, click: viewModel.menuClick, event: {mouseover: viewModel.menuMouseOver, mouseout:viewModel.menuMouseOut }"></li>
+        <li data-bind="text: name, click: viewModel.menuClick, event: {mouseover: viewModel.menuMouseOver, mouseout:viewModel.menuMouseOut }"></li>
 </ul>
 </div>
 <div id="map"></div>
