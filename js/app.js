@@ -1,16 +1,14 @@
-var largeInfowindow;
-
-
+// This creates our google marker icons. Used to generate the default and highlighted versions. 
 var makeMarkerIcon = function(markerColor) {
     var markerImage = new google.maps.MarkerImage(
-        'http:/chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor + '|40|_|&E2%80%A2', 
-        new google.maps.Size(21,34), 
-        new google.maps.Point(0,0), 
-        new google.maps.Point(10,10),
-        new google.maps.Size(21, 34)); 
+        'http:/chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor + '|40|_|&E2%80%A2',
+        new google.maps.Size(21, 34),
+        new google.maps.Point(0, 0),
+        new google.maps.Point(10, 10),
+        new google.maps.Size(21, 34));
 
-        return markerImage; 
-        
+    return markerImage;
+
 }
 
 
@@ -26,16 +24,22 @@ var viewModel = {
             zoom: 10,
             disableDefaultUI: true
         });
+
+        // Now that the map is setup. Initialize the markers. 
         viewModel.markerInit();
+
+        // Runs a search on a fresh initialization to center/zoom map on model data. 
         viewModel.search("");
     },
 
+    // Marker Initialization
     markerInit: function() {
-        
+
         // Set up Infowindow to be hooked up with markers created below. 
         largeInfowindow = new google.maps.InfoWindow({
             content: infoWindowTemplate
         });
+
         var isInfoWindowLoaded = false;
         google.maps.event.addListener(largeInfowindow, 'domready', function() {
             if (!isInfoWindowLoaded) {
@@ -45,8 +49,8 @@ var viewModel = {
         });
 
         //Establishing default and highlighted icons for markers. These are created in the makeMarkerIcon function above. 
-        var defaultIcon = makeMarkerIcon('ff3838'); 
-        var highlightedIcon = makeMarkerIcon('87ff38'); 
+        var defaultIcon = makeMarkerIcon('ff3838');
+        var highlightedIcon = makeMarkerIcon('87ff38');
 
 
 
@@ -75,10 +79,10 @@ var viewModel = {
 
             // Add mouse over and mouse out events to change marker color on selection. 
             placeItem.marker.addListener('mouseover', function() {
-                this.setIcon(highlightedIcon); 
+                this.setIcon(highlightedIcon);
             });
             placeItem.marker.addListener('mouseout', function() {
-                this.setIcon(defaultIcon); 
+                this.setIcon(defaultIcon);
             });
         });
         var bounds = new google.maps.LatLngBounds();
@@ -96,12 +100,12 @@ var viewModel = {
     },
 
     menuMouseOver: function() {
-        this.marker.setAnimation(google.maps.Animation.BOUNCE); 
+        this.marker.setAnimation(google.maps.Animation.BOUNCE);
 
     },
 
-     menuMouseOut: function() {
-        this.marker.setAnimation(null); 
+    menuMouseOut: function() {
+        this.marker.setAnimation(null);
 
     },
 
@@ -130,9 +134,9 @@ var viewModel = {
         var markerPlaced = false;
 
         if (value == '') {
-                markerPlaced = true; 
+            markerPlaced = true;
 
-                model.forEach(function(placeItem) {
+            model.forEach(function(placeItem) {
                 viewModel.places.push(placeItem);
                 placeItem.marker.setMap(map);
                 bounds.extend(placeItem.marker.position);
@@ -167,7 +171,7 @@ var viewModel = {
 
     populateInfoWindow: function(marker) {
 
-    
+
         if (largeInfowindow.marker != marker) {
             largeInfowindow.marker = marker;
             largeInfowindow.open(map, marker);
@@ -175,7 +179,7 @@ var viewModel = {
             yelpApiRequest(marker.yelpData, marker.title);
             // Make sure the marker property is cleared if the infowindow is closed.
             largeInfowindow.addListener('closeclick', function() {
-                largeInfowindow.marker= null;
+                largeInfowindow.marker = null;
             });
         }
     },
