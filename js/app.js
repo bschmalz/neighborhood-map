@@ -24,7 +24,6 @@ var viewModel = {
                 lng: -117.857176
             },
             zoom: 10,
-            maxZoom: 10, 
             disableDefaultUI: true
         });
         viewModel.markerInit();
@@ -129,11 +128,10 @@ var viewModel = {
 
         var bounds = new google.maps.LatLngBounds();
         var markerPlaced = false;
-        var fullMap = false; 
 
         if (value == '') {
                 markerPlaced = true; 
-                fullMap = true; 
+
                 model.forEach(function(placeItem) {
                 viewModel.places.push(placeItem);
                 placeItem.marker.setMap(map);
@@ -142,7 +140,6 @@ var viewModel = {
             });
 
         } else {
-            map.maxZoom = null;
             model.forEach(function(placeItem) {
                 placeItem.marker.setMap(null);
                 if (placeItem.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
@@ -161,10 +158,6 @@ var viewModel = {
         bounds.extend(extendPoint2);
 
         if (markerPlaced) {
-            if (fullMap) {
-                map.maxZoom = 10;
-                console.log("yo"); 
-            };
             map.fitBounds(bounds);
         }
 
